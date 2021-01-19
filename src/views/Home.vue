@@ -25,5 +25,6 @@ export default {
 .hilo{
   width: 100%;
   height: 100%;
+  background: url(https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/yujie_bg.png) no-repeat center/cover;
 }
 </style>

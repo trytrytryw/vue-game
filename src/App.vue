@@ -6,7 +6,7 @@
 
 <script>
 import Home from './views/Home.vue'
-import Hilo from "hilojs";
+// import Hilo from "hilojs";
 
 export default {
   name: 'App',

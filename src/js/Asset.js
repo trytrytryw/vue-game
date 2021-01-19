@@ -2,51 +2,40 @@ import Hilo from "hilojs";
 export default Hilo.Class.create({
     Mixes: Hilo.EventMixin,
     queue: null,  // 下载类
-    bg: null,   // 背景
-    bigzZongzi: null,   // 大粽子
-    zongzi: null,   // 小粽子
-    fruit: null,   // 香蕉
-    hand: null,   // 手
-    beginBtn: null,   // 开始按钮
+    gold: null,   // 金
+    wood: null,   // 木
+    water: null,   // 水
+    fireElement: null,   // 火
+    soil: null, // 土
+    person: null, // 道士
     score0: null,   // -1分
     score1: null,   // +1分
     score2: null,   // +2分
     load() {
-        let imgs = [{
-            id: 'bg',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/loading_bg@3x.png'
+        let imgs = [
+        {
+            id: 'wood',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_wood.png'
         },
         {
-            id: 'bigzZongzi',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/speciality_dark@3x.png'
+            id: 'fire',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_fire.png'
         },
         {
-            id: 'zongzi',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/color_dark@3x.png'
+            id: 'gold',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_gold.png'
         },
         {
-            id: 'fruit',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/md_dark@3x.png'
+            id: 'person',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_person.png'
         },
         {
-            id: 'hand',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/operate_dark@3x.png'
+            id: 'soil',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_soil.png'
         },
         {
-            id: 'beginBtn',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/operate_dark@3x.png'
-        },
-        {
-            id: 'score0',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/operate_dark@3x.png'
-        },
-        {
-            id: 'score1',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/operate_dark@3x.png'
-        },
-        {
-            id: 'score2',
-            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/focus/operate_dark@3x.png'
+            id: 'water',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_water.png'
         }
         ];
         this.queue = new Hilo.LoadQueue();
@@ -59,15 +48,15 @@ export default Hilo.Class.create({
     },
     onComplete() { //加载完成
         console.log('加载完成')
-        this.bg = this.queue.get('bg').content;
-        this.bigzZongzi = this.queue.get('bigzZongzi').content;
-        this.zongzi = this.queue.get('zongzi').content;
-        this.fruit = this.queue.get('fruit').content;
-        this.hand = this.queue.get('hand').content;
-        this.beginBtn = this.queue.get('beginBtn').content;
-        this.score0 = this.queue.get('score0').content;
-        this.score1 = this.queue.get('score1').content;
-        this.score2 = this.queue.get('score2').content;
+        this.gold = this.queue.get('gold').content;
+        this.wood = this.queue.get('wood').content;
+        this.water = this.queue.get('water').content;
+        this.fireElement = this.queue.get('fire').content;
+        this.soil = this.queue.get('soil').content;
+        this.person = this.queue.get('person').content;
+        // this.score0 = this.queue.get('score0').content;
+        // this.score1 = this.queue.get('score1').content;
+        // this.score2 = this.queue.get('score2').content;
  
         //删除下载队列的complete事件监听
         this.queue.off('complete');

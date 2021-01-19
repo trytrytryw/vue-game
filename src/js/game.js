@@ -21,7 +21,8 @@ export default class game {
  
         // 画布信息 
         this.width = innerWidth * 2
-        this.height = innerHeight * 2 < 1334 ? innerHeight * 2 : 1334
+        // this.height = innerHeight * 2 < 1334 ? innerHeight * 2 : 1334
+        this.height = innerHeight * 2
         this.scale = 0.5
  
         // 定时器对象
@@ -32,7 +33,7 @@ export default class game {
         //粽子下落速度
         this.enemySpeed = 700
         //粽子生成速度
-        this.createSpeed = 400
+        this.createSpeed = 600
         //接粽子的手
         this.hand = null
         //开始按钮
@@ -69,38 +70,16 @@ export default class game {
         this.ticker.addTick(Hilo.Tween);
         //启动ticker
         this.ticker.start(true);
+
  
-        this.initBg();
- 
-        this.initBeginBtn();
+        this.startGame();
  
         //this.initZongzi();
  
         //this.initHand();
  
     }
-    initBg() {  //初始化背景
-        let bgImg = this.asset.bg;
-        new Hilo.Bitmap({
-            id: 'bg',
-            image: bgImg,
-            scaleX: this.width / bgImg.width,
-            scaleY: this.height / bgImg.height
-        }).addTo(this.stage);
-    }
-    initBeginBtn() { //初始化开始按钮
-        this.beginBtn = new Hilo.Bitmap({
-            id: 'beginBtn',
-            image: this.asset.beginBtn,
-            //width: this.asset.beginBtn.width,
-            //height: this.asset.beginBtn.height,
-            x: (this.width - this.asset.beginBtn.width) / 2,
-            y: this.height - this.asset.beginBtn.height - 200,
-            rect: [0, 0, this.asset.beginBtn.width, this.asset.beginBtn.height]
-        }).addTo(this.stage, 1);
-        this.beginBtn.on(Hilo.event.POINTER_START, this.startGame.bind(this))
- 
-    }
+
     startGame() {   //开始游戏
         this.initZongzi();
         this.initHand()
@@ -136,7 +115,7 @@ export default class game {
             enemySpeed: this.enemySpeed,
             createSpeed: this.createSpeed,
             pointerEnabled: false, // 不关闭事件绑定 无法操作舞台
-            zongziList: [this.asset.bigzZongzi, this.asset.zongzi, this.asset.fruit]
+            zongziList: [this.asset.gold, this.asset.wood, this.asset.water, this.asset.fireElement, this.asset.soil]
         }).addTo(this.stage, 2)
         //舞台更新
         this.stage.onUpdate = this.onUpdate.bind(this);
@@ -144,14 +123,14 @@ export default class game {
     initHand() {//初始化手
         this.hand = new Hand({
             id: 'hand',
-            img: this.asset.hand,
-            height: this.asset.hand.height,
-            width: this.asset.hand.width,
-            x: this.width / 2 - this.asset.hand.width / 2,
-            y: this.height - this.asset.hand.height + 30
+            img: this.asset.person,
+            height: this.asset.person.height,
+            width: this.asset.person.width,
+            x: this.width / 2 - this.asset.person.width / 4,
+            y: this.height - this.asset.person.height / 2 - 40
         }).addTo(this.stage, 1);
         Hilo.util.copy(this.hand, Hilo.drag);
-        this.hand.startDrag([-this.asset.hand.width / 4, this.height - this.asset.hand.height + 30, this.width - this.asset.hand.width / 2, 0]);
+        this.hand.startDrag([-this.asset.person.width / 4, this.height - this.asset.person.height / 2 - 40, this.width, 0]);
     }
     onUpdate() {//舞台更新
         if (this.gameStatus == 'ready') {
@@ -161,21 +140,21 @@ export default class game {
             if (this.hand.checkCollision(item)) {
                 // 碰撞了
                 item.over();
-                this.score += item.score;
-                switch (item.score) {
-                    case -1:
-                        this.hand.addScore(this.asset.score0)
-                        break;
-                    case 1:
-                        this.hand.addScore(this.asset.score1)
-                        break;
-                    case 2:
-                        this.hand.addScore(this.asset.score2)
-                        break;
+                // this.score += item.score;
+                // switch (item.score) {
+                //     case -1:
+                //         this.hand.addScore(this.asset.score0)
+                //         break;
+                //     case 1:
+                //         this.hand.addScore(this.asset.score1)
+                //         break;
+                //     case 2:
+                //         this.hand.addScore(this.asset.score2)
+                //         break;
  
-                    default:
-                        break;
-                }
+                //     default:
+                //         break;
+                // }
             }
         })
     }

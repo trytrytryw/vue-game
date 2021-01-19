@@ -12,22 +12,16 @@ let hand = Hilo.Class.create({
     constructor(properties) {
         hand.superclass.constructor.call(this, properties)
         this.initHand()
-        this.initBowl()
     },
     initHand() {  //初始化背景
-        new Hilo.Bitmap({
+        this.hand = new Hilo.Bitmap({
             id: 'hand',
             image: this.img,
-            rect: [0, 0, this.img.width, this.img.height]
-        }).addTo(this);
-    },
-    initBowl() { //初始化碗
-        this.bowl = new Hilo.Bitmap({
-            id: 'bowl',
-            //background: 'rgba(255,255,255,0.4)',
-            rect: [0, 0, this.img.width / 3, 10],
-            x: this.img.width / 3,
-            y: 50
+            rect: [0, 0, this.img.width, this.img.height],
+            width: this.img.width / 2,
+            height: this.img.height / 2,
+            // scaleX: 0.5,
+            // scaleY: 0.5,
         }).addTo(this);
     },
     addScore(image) { //加分
@@ -57,7 +51,7 @@ let hand = Hilo.Class.create({
  
     // 碰撞检测
     checkCollision(enemy) {
-        if (enemy.hitTestObject(this.bowl, true)) {
+        if (enemy.hitTestObject(this.hand, true)) {
             return true;
         }
         return false;
