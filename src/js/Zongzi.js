@@ -7,7 +7,7 @@ let Enemy = Hilo.Class.create({
     zongziList: [],
     enemySpeed: 0,
     createSpeed: 0,
-    score: [2, 1, -1],
+    score: ['coin', 'plus', 'speed', 'minus', 'shield'],
     tween: null,
  
     constructor: function (properties) {

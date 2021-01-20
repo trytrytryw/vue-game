@@ -6,12 +6,14 @@ let hand = Hilo.Class.create({
     img: null,
     //碗
     bowl: null,
-    //分数
-    score: null,
+    //血条
+    blood: null,
+
+    shield: null, // 防护罩
  
     constructor(properties) {
         hand.superclass.constructor.call(this, properties)
-        this.initHand()
+        this.initHand();
     },
     initHand() {  //初始化背景
         this.hand = new Hilo.Bitmap({
@@ -25,28 +27,80 @@ let hand = Hilo.Class.create({
         }).addTo(this);
     },
     addScore(image) { //加分
-        this.score = new Hilo.Bitmap({
-            id: 'score',
+        this.blood = new Hilo.Bitmap({
+            id: 'blood',
             image: image,
             rect: [0, 0, image.width, image.height],
-            x: (this.img.width - image.width) / 2,
+            width: image.width / 2,
+            height: image.height / 2,
+            x: (this.img.width / 2 - image.width / 2) / 2,
             y: -image.height
         }).addTo(this);
  
-        Hilo.Tween.to(this.score, {
-            x: (this.img.width - image.width / 2) / 2,
-            y: -2 * image.height,
+        // Hilo.Tween.to(this.blood, {
+        //     x: (this.img.width - image.width / 2) / 2,
+        //     y: -2 * image.height,
+        //     alpha: 0,
+        //     width: image.width / 2,
+        //     height: image.height / 2
+        // }, 
+        // // {
+        // //     duration: 600,
+        // //     //delay: 100,
+        // //     ease: Hilo.Ease.Quad.EaseIn,
+        // //     onComplete: () => {
+                
+        // //     }
+        // // }
+        // );
+    },
+
+    addShield(image) { //添加防护罩
+        this.shield = new Hilo.Bitmap({
+            id: 'shield',
+            image: image,
+            rect: [0, 0, image.width, image.height],
+            width: image.width / 2,
+            height: image.height / 2,
+            x: (this.img.width / 2 - image.width / 2) / 2,
+            y: 0
+        }).addTo(this);
+ 
+        // Hilo.Tween.to(this.shield, {
+        //     x: (this.img.width - image.width / 2) / 2,
+        //     y: -2 * image.height,
+        //     alpha: 0,
+        //     width: image.width / 2,
+        //     height: image.height / 2
+        // }, 
+        // // {
+        // //     duration: 600,
+        // //     //delay: 100,
+        // //     ease: Hilo.Ease.Quad.EaseIn,
+        // //     onComplete: () => {
+                
+        // //     }
+        // // }
+        // );
+    },
+
+    removeShield(image) {
+        Hilo.Tween.to(this.shield, {
+            x: (this.img.width / 2 - image.width / 2) / 2,
+            y: 0,
             alpha: 0,
             width: image.width / 2,
             height: image.height / 2
-        }, {
-            duration: 600,
+        }, 
+        {
+            duration: 200,
             //delay: 100,
             ease: Hilo.Ease.Quad.EaseIn,
             onComplete: () => {
                 
             }
-        });
+        }
+        );
     },
  
     // 碰撞检测

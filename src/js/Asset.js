@@ -8,9 +8,11 @@ export default Hilo.Class.create({
     fireElement: null,   // 火
     soil: null, // 土
     person: null, // 道士
-    score0: null,   // -1分
-    score1: null,   // +1分
-    score2: null,   // +2分
+    blood0: null,   // 空血
+    blood1: null,   // 1滴血
+    blood2: null,   // 2滴血
+    blood3: null,   // 3滴血
+    shield: null, // 防护罩
     load() {
         let imgs = [
         {
@@ -36,6 +38,26 @@ export default Hilo.Class.create({
         {
             id: 'water',
             src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/game_water.png'
+        },
+        {
+            id: 'blood0',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/blood0.png'
+        },
+        {
+            id: 'blood1',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/blood1.png'
+        },
+        {
+            id: 'blood2',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/blood2.png'
+        },
+        {
+            id: 'blood3',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/blood3.png'
+        },
+        {
+            id: 'shield',
+            src: 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/shield.png'
         }
         ];
         this.queue = new Hilo.LoadQueue();
@@ -54,9 +76,11 @@ export default Hilo.Class.create({
         this.fireElement = this.queue.get('fire').content;
         this.soil = this.queue.get('soil').content;
         this.person = this.queue.get('person').content;
-        // this.score0 = this.queue.get('score0').content;
-        // this.score1 = this.queue.get('score1').content;
-        // this.score2 = this.queue.get('score2').content;
+        this.blood0 = this.queue.get('blood0').content;
+        this.blood1 = this.queue.get('blood1').content;
+        this.blood2 = this.queue.get('blood2').content;
+        this.blood3 = this.queue.get('blood3').content;
+        this.shield = this.queue.get('shield').content;
  
         //删除下载队列的complete事件监听
         this.queue.off('complete');

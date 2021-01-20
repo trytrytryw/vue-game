@@ -1,5 +1,9 @@
 <template>
-  <div class="hilo" ref="hilo"></div>
+  <div class="hilo" ref="hilo">
+    <!-- 背景音频 -->
+    <audio id="audio" preload="auto" src="https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/sx_bgm.mp3"></audio>
+    <audio id="audio2" preload="auto" autoplay src=""></audio>
+  </div>
 </template>
 
 <script>
@@ -12,10 +16,20 @@ export default {
       game: new Game()
     }
   },
+  computed: {
+    coin() {
+      return this.game.coin
+    },
+    gameTime() {
+      return this.game.gameTime
+    }
+  },
   methods: {},
   mounted() {
     this.game.page = this.$refs.hilo;
     this.game.init();
+    window.$('#audio')[0].volume = 0.7;
+    window.$('#audio')[0].play();
   }
 }
 </script>
@@ -26,5 +40,13 @@ export default {
   width: 100%;
   height: 100%;
   background: url(https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/yujie_bg.png) no-repeat center/cover;
+}
+#audio{
+  position: absolute;
+  left: 1000000px;
+}
+#audio2{
+  position: absolute;
+  left: 1000000px;
 }
 </style>

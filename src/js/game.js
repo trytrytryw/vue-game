@@ -38,8 +38,13 @@ export default class game {
         this.hand = null
         //开始按钮
         this.beginBtn = null
-        //分数
-        this.score = 0
+        //血条
+        this.blood = 3
+        // 金币
+        this.coin = 0
+        // 是否有护盾
+        this.protect = false
+        this.speedTimeout = null
  
  
     }
@@ -101,9 +106,13 @@ export default class game {
         }, 1000);
     }
     gameOver() {//游戏结束
+        if (this.speedTimeout) {
+            clearTimeout(this.speedTimeout);
+            this.speedTimeout = null;
+        }
         this.Zongzi.stopCreateEnemy()
         this.gameStatus = "ready"
-        this.initBeginBtn()
+        // this.initBeginBtn()
         //this.hand.removeChild(this.hand.score)
         this.stage.removeChild(this.hand)
     }
@@ -131,6 +140,8 @@ export default class game {
         }).addTo(this.stage, 1);
         Hilo.util.copy(this.hand, Hilo.drag);
         this.hand.startDrag([-this.asset.person.width / 4, this.height - this.asset.person.height / 2 - 40, this.width, 0]);
+        
+        this.hand.addScore(this.asset.blood3);
     }
     onUpdate() {//舞台更新
         if (this.gameStatus == 'ready') {
@@ -141,20 +152,74 @@ export default class game {
                 // 碰撞了
                 item.over();
                 // this.score += item.score;
-                // switch (item.score) {
-                //     case -1:
-                //         this.hand.addScore(this.asset.score0)
-                //         break;
-                //     case 1:
-                //         this.hand.addScore(this.asset.score1)
-                //         break;
-                //     case 2:
-                //         this.hand.addScore(this.asset.score2)
-                //         break;
+                switch (item.score) {
+                    case 'coin':
+                        window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/gold.mp3')
+                        // window.$('#audio2')[0].play();
+                        this.coin+=10;
+                        break;
+                    case 'minus':
+                        window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/fire.mp3')
+                        if (this.protect) {
+                            this.protect = false;
+                            this.hand.removeShield(this.asset.shield);
+                            return
+                        }
+
+                        if (this.blood == 3) {
+                            this.blood = 2;
+                            this.hand.addScore(this.asset.blood2)
+                        } else if (this.blood == 2) {
+                            this.blood = 1;
+                            this.hand.addScore(this.asset.blood1)
+                        } else if (this.blood == 1) { // 游戏失败，结束游戏
+                            window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/sx_fail.mp3')
+                            this.blood = 0;
+                            this.hand.addScore(this.asset.blood0);
+                            this.gameOver()
+                        }
+                        
+                        break;
+                    case 'plus':
+                        window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/wood.mp3')
+                        if (this.blood >= 2) {
+                            this.blood = 3;
+                            this.hand.addScore(this.asset.blood3)
+                        } else if (this.blood == 1) {
+                            this.blood = 2;
+                            this.hand.addScore(this.asset.blood2)
+                        }
+                        break;
+                    case 'speed':
+                        window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/water.mp3')
+                        this.enemySpeed = 1200;
+                        this.Zongzi.stopCreateEnemy();
+                        this.initZongzi();
+                        if (this.speedTimeout) {
+                            clearTimeout(this.speedTimeout);
+                            this.speedTimeout = null;
+                        }
+                        this.speedTimeout = setTimeout(() => {
+                            this.enemySpeed = 700;
+                            this.Zongzi.stopCreateEnemy();
+                            this.initZongzi();
+                        }, 5000)
+                        break;
+                    case 'shield':
+                        window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/soil.mp3')
+                        if (!this.protect) {
+                            this.protect = true;
+                            this.hand.addShield(this.asset.shield)
+                        } else {
+                            // this.protect = false;
+                            // this.hand.removeShield(this.asset.shield)
+                        }
+                        
+                        break;
  
-                //     default:
-                //         break;
-                // }
+                    default:
+                        break;
+                }
             }
         })
     }
