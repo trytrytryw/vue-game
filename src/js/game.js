@@ -45,6 +45,7 @@ export default class game {
         // 是否有护盾
         this.protect = false
         this.speedTimeout = null
+        this.getProp = false
  
  
     }
@@ -115,6 +116,25 @@ export default class game {
         // this.initBeginBtn()
         //this.hand.removeChild(this.hand.score)
         this.stage.removeChild(this.hand)
+        if (this.blood < 1) {
+            window.wx.miniProgram.navigateTo({
+                url: '../result/result?res=fail'
+            })
+        } else if (this.blood < 3) {
+            window.wx.miniProgram.navigateTo({
+                url: '../result/result?res=common'
+            })
+        } else {
+            if (this.getProp) {
+                window.wx.miniProgram.navigateTo({
+                    url: '../result/result?res=common'
+                })
+            } else {
+                window.wx.miniProgram.navigateTo({
+                    url: '../result/result?res=success'
+                })
+            }
+        }
     }
     initZongzi() {//初始化粽子
         this.Zongzi = new Zongzi({
@@ -157,8 +177,10 @@ export default class game {
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/gold.mp3')
                         // window.$('#audio2')[0].play();
                         this.coin+=10;
+                        this.getProp = true;
                         break;
                     case 'minus':
+                        this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/fire.mp3')
                         if (this.protect) {
                             this.protect = false;
@@ -181,6 +203,7 @@ export default class game {
                         
                         break;
                     case 'plus':
+                        this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/wood.mp3')
                         if (this.blood >= 2) {
                             this.blood = 3;
@@ -191,6 +214,7 @@ export default class game {
                         }
                         break;
                     case 'speed':
+                        this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/water.mp3')
                         this.enemySpeed = 1200;
                         this.Zongzi.stopCreateEnemy();
@@ -206,6 +230,7 @@ export default class game {
                         }, 5000)
                         break;
                     case 'shield':
+                        this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/soil.mp3')
                         if (!this.protect) {
                             this.protect = true;
