@@ -6,7 +6,7 @@ export default class game {
     constructor(page) {
         this.page = page
         //设置的游戏时间
-        this.setGameTime = 30
+        this.setGameTime = 40
         this.gameTime = 0
         this.gameStatus = "ready"
         /*
@@ -45,6 +45,7 @@ export default class game {
         // 是否有护盾
         this.protect = false
         this.speedTimeout = null
+        this.gameTimeout = null
         this.getProp = false
  
  
@@ -97,7 +98,7 @@ export default class game {
         this.calcTime()
     }
     calcTime() { //游戏时间
-        setTimeout(() => {
+        this.gameTimeout = setTimeout(() => {
             if (this.gameTime > 0) {
                 this.gameTime--;
                 this.calcTime()
@@ -110,6 +111,10 @@ export default class game {
         if (this.speedTimeout) {
             clearTimeout(this.speedTimeout);
             this.speedTimeout = null;
+        }
+        if (this.gameTimeout) {
+            clearTimeout(this.gameTimeout);
+            this.gameTimeout = null;
         }
         this.Zongzi.stopCreateEnemy()
         this.gameStatus = "ready"
