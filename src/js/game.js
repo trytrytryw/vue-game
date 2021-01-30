@@ -31,9 +31,9 @@ export default class game {
         //粽子对象
         this.Zongzi = null
         //粽子下落速度
-        this.enemySpeed = 700
+        this.enemySpeed = 500
         //粽子生成速度
-        this.createSpeed = 600
+        this.createSpeed = 800
         //接粽子的手
         this.hand = null
         //开始按钮
@@ -122,20 +122,20 @@ export default class game {
         //this.hand.removeChild(this.hand.score)
         this.stage.removeChild(this.hand)
         if (this.blood < 1) {
-            window.wx.miniProgram.navigateTo({
+            window.wx.miniProgram.redirectTo({
                 url: '../result/result?res=fail'
             })
         } else if (this.blood < 3) {
-            window.wx.miniProgram.navigateTo({
+            window.wx.miniProgram.redirectTo({
                 url: '../result/result?res=common'
             })
         } else {
             if (this.getProp) {
-                window.wx.miniProgram.navigateTo({
+                window.wx.miniProgram.redirectTo({
                     url: '../result/result?res=common'
                 })
             } else {
-                window.wx.miniProgram.navigateTo({
+                window.wx.miniProgram.redirectTo({
                     url: '../result/result?res=success'
                 })
             }
@@ -180,13 +180,19 @@ export default class game {
                 switch (item.score) {
                     case 'coin':
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/gold.mp3')
-                        // window.$('#audio2')[0].play();
+                        document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
+                        
                         this.coin+=10;
                         this.getProp = true;
                         break;
                     case 'minus':
                         this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/fire.mp3')
+                        document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
                         if (this.protect) {
                             this.protect = false;
                             this.hand.removeShield(this.asset.shield);
@@ -201,6 +207,9 @@ export default class game {
                             this.hand.addScore(this.asset.blood1)
                         } else if (this.blood == 1) { // 游戏失败，结束游戏
                             window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/sx_fail.mp3')
+                            document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
                             this.blood = 0;
                             this.hand.addScore(this.asset.blood0);
                             this.gameOver()
@@ -210,6 +219,9 @@ export default class game {
                     case 'plus':
                         this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/wood.mp3')
+                        document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
                         if (this.blood >= 2) {
                             this.blood = 3;
                             this.hand.addScore(this.asset.blood3)
@@ -221,7 +233,10 @@ export default class game {
                     case 'speed':
                         this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/water.mp3')
-                        this.enemySpeed = 1200;
+                        document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
+                        this.enemySpeed = 900;
                         this.Zongzi.stopCreateEnemy();
                         this.initZongzi();
                         if (this.speedTimeout) {
@@ -229,7 +244,7 @@ export default class game {
                             this.speedTimeout = null;
                         }
                         this.speedTimeout = setTimeout(() => {
-                            this.enemySpeed = 700;
+                            this.enemySpeed = 500;
                             this.Zongzi.stopCreateEnemy();
                             this.initZongzi();
                         }, 5000)
@@ -237,6 +252,9 @@ export default class game {
                     case 'shield':
                         this.getProp = true;
                         window.$('#audio2').attr('src', 'https://sightppp.oss-cn-shanghai.aliyuncs.com/projects/luyi/audio/sxyx/soil.mp3')
+                        document.addEventListener("WeixinJSBridgeReady", function () {
+                            window.$('#audio2')[0].play();
+                          }, false);
                         if (!this.protect) {
                             this.protect = true;
                             this.hand.addShield(this.asset.shield)
