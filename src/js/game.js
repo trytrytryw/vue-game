@@ -237,17 +237,14 @@ export default class game {
                         document.addEventListener("WeixinJSBridgeReady", function () {
                             window.$('#audio2')[0].play();
                           }, false);
-                        this.enemySpeed = 900;
-                        this.Zongzi.stopCreateEnemy();
-                        this.initZongzi();
+                          
+                        this.Zongzi.updateEnemySpeed(900);
                         if (this.speedTimeout) {
                             clearTimeout(this.speedTimeout);
                             this.speedTimeout = null;
                         }
                         this.speedTimeout = setTimeout(() => {
-                            this.enemySpeed = 500;
-                            this.Zongzi.stopCreateEnemy();
-                            this.initZongzi();
+                            this.Zongzi.updateEnemySpeed(500);
                         }, 5000)
                         break;
                     case 'shield':
