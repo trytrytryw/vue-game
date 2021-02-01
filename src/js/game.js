@@ -33,7 +33,7 @@ export default class game {
         //粽子下落速度
         this.enemySpeed = 500
         //粽子生成速度
-        this.createSpeed = 800
+        this.createSpeed = 1000
         //接粽子的手
         this.hand = null
         //开始按钮
@@ -160,11 +160,12 @@ export default class game {
             img: this.asset.person,
             height: this.asset.person.height,
             width: this.asset.person.width,
-            x: this.width / 2 - this.asset.person.width / 4,
-            y: this.height - this.asset.person.height / 2 - 40
+            x: this.width / 2 - this.asset.person.width / 8,
+            y: this.height - this.asset.person.height / 4 - 40
         }).addTo(this.stage, 1);
         Hilo.util.copy(this.hand, Hilo.drag);
-        this.hand.startDrag([-this.asset.person.width / 4, this.height - this.asset.person.height / 2 - 40, this.width, 0]);
+        // this.hand.startDrag([-this.asset.person.width / 4, this.height - this.asset.person.height / 4 - 40, this.width, 0]);
+        this.hand.startDrag([0, this.height - this.asset.person.height / 4 - 40, this.width - this.asset.person.width / 4, 0]);
         
         this.hand.addScore(this.asset.blood3);
     }

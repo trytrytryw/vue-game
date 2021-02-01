@@ -20,8 +20,8 @@ let hand = Hilo.Class.create({
             id: 'hand',
             image: this.img,
             rect: [0, 0, this.img.width, this.img.height],
-            width: this.img.width / 2,
-            height: this.img.height / 2,
+            width: this.img.width / 4,
+            height: this.img.height / 4,
             // scaleX: 0.5,
             // scaleY: 0.5,
         }).addTo(this);
@@ -31,9 +31,9 @@ let hand = Hilo.Class.create({
             id: 'blood',
             image: image,
             rect: [0, 0, image.width, image.height],
-            width: image.width / 2,
-            height: image.height / 2,
-            x: (this.img.width / 2 - image.width / 2) / 2,
+            width: image.width / 4,
+            height: image.height / 4,
+            x: (this.img.width / 4 - image.width / 4) / 2,
             y: -image.height
         }).addTo(this);
  
@@ -60,9 +60,9 @@ let hand = Hilo.Class.create({
             id: 'shield',
             image: image,
             rect: [0, 0, image.width, image.height],
-            width: image.width / 2,
-            height: image.height / 2,
-            x: (this.img.width / 2 - image.width / 2) / 2,
+            width: image.width / 4,
+            height: image.height / 4,
+            x: (this.img.width / 4 - image.width / 4) / 2,
             y: 0
         }).addTo(this);
  
