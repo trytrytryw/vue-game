@@ -68,7 +68,14 @@ let Enemy = Hilo.Class.create({
  
         }, this.createSpeed);
     },
-    updateEnemySpeed(speed = 500) {//开始生成
+    updateCreateSpeed(speed = 1800) {
+        this.createSpeed = speed;
+        if (this.timer) {
+            clearInterval(this.timer)
+        }
+        this.beginCreateEnemy()
+    },
+    updateEnemySpeed(speed = 500) {
         this.enemySpeed = speed;
     },
     stopCreateEnemy() {//停止生成并全部移除

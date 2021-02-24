@@ -33,7 +33,7 @@ export default class game {
         //粽子下落速度
         this.enemySpeed = 500
         //粽子生成速度
-        this.createSpeed = 1000
+        this.createSpeed = 1800
         //接粽子的手
         this.hand = null
         //开始按钮
@@ -46,6 +46,7 @@ export default class game {
         this.protect = false
         this.speedTimeout = null
         this.gameTimeout = null
+        this.createTimeout = null
         this.getProp = false
  
  
@@ -94,8 +95,18 @@ export default class game {
         this.stage.removeChild(this.beginBtn)
         this.gameTime = this.setGameTime;
         this.score = 0;
-        this.gameStatus = "play"
-        this.calcTime()
+        this.gameStatus = "play";
+        this.calcTime();
+        this.editCreateTime()
+    }
+    editCreateTime () {
+        this.createTimeout = setTimeout(() => {
+            this.createSpeed = this.createSpeed - 300;
+            // console.log(this.createSpeed)
+            this.Zongzi.updateCreateSpeed(this.createSpeed);
+            if (this.createSpeed <= 900) return;
+            this.editCreateTime();
+        }, 10000)
     }
     calcTime() { //游戏时间
         this.gameTimeout = setTimeout(() => {
